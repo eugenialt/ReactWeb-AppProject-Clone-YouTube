@@ -1,0 +1,62 @@
+nav {
+    padding: 10px 2%;
+    justify-content: space-between;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.nav-left .menu-icon {
+    width: 22px;
+    height: auto;
+    margin-right: 25px;
+}
+
+.nav-left .logo {
+    width: 130px;
+    height: auto;
+
+}
+
+.nav-middle {
+    border: 1px solid #ccc;
+    margin-right: 15px;
+    padding: 8px 12px;
+    border-radius: 25px;
+}
+
+.nav-middle input {
+    width: 400px;
+    border: 0;
+    outline: 0;
+    background: transparent;
+}
+.nav-middle img{
+    width: 15px;
+    height: auto;
+}
+
+.nav-right img{
+    width: 25px;
+    height: auto;
+    margin-right: 25px;
+}
+
+.nav-right .user-icon {
+    width : 35px;
+    height: auto;
+    border-radius: 50%;
+}
+
+.menu {
+    cursor: pointer;
+    border: none;
+    color: #fff;
+    outline: none; 
+    background: transparent;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+}
