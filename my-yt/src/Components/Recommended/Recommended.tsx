@@ -1,4 +1,5 @@
-import React from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
 import './Recommended.css'
 import thumbnail1 from '../../assets/thumbnail1.png'
 import thumbnail2 from '../../assets/thumbnail2.png'
@@ -8,19 +9,61 @@ import thumbnail5 from '../../assets/thumbnail5.png'
 import thumbnail6 from '../../assets/thumbnail6.png'
 import thumbnail7 from '../../assets/thumbnail7.png'
 import thumbnail8 from '../../assets/thumbnail8.png'
+import { API_KEY } from '../../../../data'
 
- const Recommended = () => {
-  return (
+interface Video {
+    id: string;
+    snippet: {
+      title: string;
+      channelTitle: string;
+      publishedAt: string;
+      categoryId: string;
+      thumbnails: {
+        medium: {
+          url: string;
+        };
+      };
+      medium: {
+        url: string;
+      };
+      url: string;
+    };
+    statistics: {
+      viewCount: string;
+    };
+  }
+  
+ const Recommended = ({categoryId} :{ categoryId: string | undefined; }) => {
+  
+    const [data, setData] = useState<Video[]>([]);
+  
+    const fetchData = async () => {
+        const relatedVideo_url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&regionCode=US&videoCategoryId=${categoryId}&key=${API_KEY}`;
+        await fetch(relatedVideo_url)
+        .then((response) => response.json())
+        .then((data) => setData(data.items));
+    }
+
+    useEffect(()=>{
+        fetchData()
+    }, [categoryId])
+
+    return (
         <div className='recommended'>
-            <div className="side-video-list">
-                <img src={thumbnail1} alt=""  />
-                <div className="vid-info">
-                <h4> Best channel to learn coding that help you to be a web developer</h4>
-                <p>GreatStack</p>
-                <p>199K views</p>
+             {Array.isArray(data) && data.map((item, index) => {
+            return (
+                <div key={index} className="side-video-list">
+                    <img src={thumbnail1} alt="" />
+                    <div className="vid-info">
+                        <h4>Best channel to learn coding that helps you to be a web developer</h4>
+                        <p>GreatStack</p>
+                        <p>199K views</p>
+                    </div>
                 </div>
-            </div>
-            <div className="side-video-list">
+            )
+        })}
+            
+            {/* <div className="side-video-list">
                 <img src={thumbnail2} alt="" />
                 <div className="vid-info">
                 <h4> Best channel to learn coding that help you to be a web developer</h4>
@@ -75,7 +118,7 @@ import thumbnail8 from '../../assets/thumbnail8.png'
                 <p>GreatStack</p>
                 <p>199K views</p>
                 </div>
-            </div>
+            </div> */}
         </div> 
       )
     }

@@ -1,4 +1,5 @@
-import React from 'react'
+"use client"
+import React, { useEffect } from 'react'
 import './PlayVideo.css'
 import video from '../../assets/video.mp4'
 import like from '../../assets/like.png'
@@ -7,12 +8,53 @@ import share from '../../assets/share.png'
 import save from '../../assets/save.png'
 import jack from '../../assets/jack.png'
 import user_profile from '../../assets/user_profile.jpg'
+import { useState } from 'react'
+import { API_KEY } from '../../../../data'
+import { useParams } from 'react-router'
 
-const PlayVideo = () => {
+
+interface Video{
+  id: string;
+  snippet: {
+    title: string;
+    channelTitle: string;
+    publishedAt: string;
+    categoryId: string;
+    thumbnails: {
+      medium: {
+        url: string;
+      };
+    };
+    medium: {
+      url: string;
+    };
+    url: string;
+  };
+  statistics: {
+    viewCount: string;
+  };
+}
+
+// {videoId, categoryId }:{videoId: string | undefined; categoryId: string | undefined}
+const PlayVideo = ({videoId}: {videoId: string | undefined }) => {
+
+const [apiData, setData] = useState<Video[]>([]);
+const fetchData = async () => {
+  const videoList_url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=US&videoCategoryId=${videoId}&key=${API_KEY}`;
+  await fetch(videoList_url)
+    .then((response) => response.json())
+    .then((data) => setData(data.items));
+};
+
+useEffect(() => {
+  fetchData();
+}, []);
+
   return (
     <div className='play-video'>
-      <video src={video} controls autoPlay muted></video>
-      <h3>Best channel to learn coding that help you to be a web developer</h3>
+      {/* <video src={video} controls autoPlay muted></video> */}
+      <iframe src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}  frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+      <h3></h3>
       <div className="play-video-info">
         <p>1525 Views &bull; 2 days ago</p>
        <div>
