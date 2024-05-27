@@ -26,3 +26,9 @@ h4{
 p{
     font-size: 14px;
 }
+
+@media (max-width: 900px) {
+    .recommended {
+       max-width: 100%;
+    }
+}

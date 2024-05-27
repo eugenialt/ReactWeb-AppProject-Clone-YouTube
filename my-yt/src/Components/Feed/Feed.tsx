@@ -1,18 +1,8 @@
-"use client"
-import React from 'react'
-import './Feed.css'
-import thumbnail1 from '../../assets/thumbnail1.png'
-import thumbnail2 from '../../assets/thumbnail2.png'
-import thumbnail3 from '../../assets/thumbnail3.png'
-import thumbnail4 from '../../assets/thumbnail4.png'
-import thumbnail5 from '../../assets/thumbnail5.png'
-import thumbnail6 from '../../assets/thumbnail6.png'
-import thumbnail7 from '../../assets/thumbnail7.png'
-import thumbnail8 from '../../assets/thumbnail8.png'
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { API_KEY, value_converter } from '../../../../data'
-import { useState, useEffect } from 'react'
-import moment from 'moment'
+import moment from 'moment';
+import './Feed.css';
+import { API_KEY, value_converter } from '../../../../data';
 
 interface Video {
   id: string;
@@ -26,10 +16,6 @@ interface Video {
         url: string;
       };
     };
-    medium: {
-      url: string;
-    };
-    url: string;
   };
   statistics: {
     viewCount: string;
@@ -38,27 +24,71 @@ interface Video {
 
 const Feed = ({ category }: { category: string }) => {
   const [data, setData] = useState<Video[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [timer, setTimer] = useState<Node.Timeout | null>(null);
 
-  const fetchData = async () => {
-    const videoList_url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=US&videoCategoryId=${category}&key=${API_KEY}`;
+  const fetchData = async (query: string = '') => {
+    let videoList_url;
+    if (query) {
+      videoList_url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=50&q=${query}&key=${API_KEY}`;
+    } else {
+      videoList_url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&chart=mostPopular&maxResults=50&regionCode=US&videoCategoryId=${category}&key=${API_KEY}`;
+    }
     await fetch(videoList_url)
       .then((response) => response.json())
-      .then((data) => setData(data.items));
+      .then((data) => {
+        if (query) {
+          setData(data.items.map((item: any) => ({
+            id: item.id.videoId,
+            snippet: item.snippet,
+            statistics: { viewCount: '0' }
+          })));
+        } else {
+          setData(data.items);
+        }
+      });
   };
+
+  useEffect(() => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    if (searchQuery) {
+      const newTimer = setTimeout(() => {
+        fetchData(searchQuery);
+      }, 1000);
+      setTimer(newTimer);
+    } else {
+      fetchData();
+    }
+  }, [searchQuery]);
 
   useEffect(() => {
     fetchData();
   }, [category]);
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    // console.log(searchQuery)
+  };
+
   return (
     <div className="feed">
+      <form className="search-form">
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+      </form>
       {data.map((item) => (
         <Link
           to={`video/${item.snippet.categoryId}/${item.id}`}
           className="card"
-          key={item.id} 
+          key={item.id}
         >
-          <img src={item.snippet.thumbnails.medium.url} alt="" />
+          <img src={item.snippet.thumbnails.medium.url} alt={item.snippet.title} />
           <h2>{item.snippet.title}</h2>
           <h3>{item.snippet.channelTitle}</h3>
           <p>
@@ -71,4 +101,83 @@ const Feed = ({ category }: { category: string }) => {
   );
 };
 
-export default Feed
+export default Feed;
+
+
+
+
+
+// "use client"
+// import React from 'react'
+// import './Feed.css'
+// import thumbnail1 from '../../assets/thumbnail1.png'
+// import thumbnail2 from '../../assets/thumbnail2.png'
+// import thumbnail3 from '../../assets/thumbnail3.png'
+// import thumbnail4 from '../../assets/thumbnail4.png'
+// import thumbnail5 from '../../assets/thumbnail5.png'
+// import thumbnail6 from '../../assets/thumbnail6.png'
+// import thumbnail7 from '../../assets/thumbnail7.png'
+// import thumbnail8 from '../../assets/thumbnail8.png'
+// import { Link } from 'react-router-dom';
+// import { API_KEY, value_converter } from '../../../../data'
+// import { useState, useEffect } from 'react'
+// import moment from 'moment'
+
+// interface Video {
+//   id: string;
+//   snippet: {
+//     title: string;
+//     channelTitle: string;
+//     publishedAt: string;
+//     categoryId: string;
+//     thumbnails: {
+//       medium: {
+//         url: string;
+//       };
+//     };
+//     medium: {
+//       url: string;
+//     };
+//     url: string;
+//   };
+//   statistics: {
+//     viewCount: string;
+//   };
+// }
+
+// const Feed = ({ category }: { category: string }) => {
+//   const [data, setData] = useState<Video[]>([]);
+
+//   const fetchData = async () => {
+//     const videoList_url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=US&videoCategoryId=${category}&key=${API_KEY}`;
+//     await fetch(videoList_url)
+//       .then((response) => response.json())
+//       .then((data) => setData(data.items));
+//   };
+
+//   useEffect(() => {
+//     fetchData();
+//   }, [category]);
+
+//   return (
+//     <div className="feed">
+//       {data.map((item) => (
+//         <Link
+//           to={`video/${item.snippet.categoryId}/${item.id}`}
+//           className="card"
+//           key={item.id} 
+//         >
+//           <img src={item.snippet.thumbnails.medium.url} alt="" />
+//           <h2>{item.snippet.title}</h2>
+//           <h3>{item.snippet.channelTitle}</h3>
+//           <p>
+//             {value_converter(item.statistics.viewCount)} views &bull;{" "}
+//             {moment(item.snippet.publishedAt).fromNow()}
+//           </p>
+//         </Link>
+//       ))}
+//     </div>
+//   );
+// };
+
+// export default Feed

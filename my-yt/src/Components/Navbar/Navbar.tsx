@@ -7,7 +7,6 @@ import more_icon from "../../assets/more.png"
 import notification_icon from "../../assets/notification.png"
 import profile_icon from "../../assets/jack.png"
 import { Link } from 'react-router-dom'
-
 type NavbarProps = {
   setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -15,7 +14,8 @@ type NavbarProps = {
 const Navbar: React.FC<NavbarProps> = ({ setSidebar }) => {
   const toggleSidebar = () => {
     setSidebar((prev) => !prev);
-  };
+  }
+  
   return (
     <nav className='flex-div'>
      <div className="nav-left flex-div">
@@ -25,13 +25,15 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebar }) => {
 
      
      <div className="nav-middle flex-div">
-          <input type="text" placeholder="Search"/>
+          <input className='search-box' type="text" placeholder="Search"/>
           <img src={search_icon} alt="" />
       </div>
 
       <div className="nav-right flex-div">
         <img src={upload_icon} alt="" />
-        <img src={more_icon} alt="" />
+        <Link to="/favorites">
+          <img src={more_icon} alt="Favorites" />
+        </Link>
         <img src={notification_icon}  alt="" />
         <img src={profile_icon} className='user-icon'  alt="" />
       </div>

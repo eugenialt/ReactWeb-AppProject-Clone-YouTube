@@ -3,6 +3,7 @@ import Navbar from './Components/Navbar/Navbar'
 import { Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home/Home';
 import Video from './Pages/Video/Video';
+import Favorites from './Pages/FavoritVideo/favorits';
 
 const App = () =>{
 
@@ -13,6 +14,7 @@ const App = () =>{
       <Routes>
         <Route path="/" element={< Home sidebar={sidebar}/>} />
         <Route path='/video/:category/:videoId' element={<Video />} />
+        <Route path="/favorites" element={<Favorites />} />
       </Routes>
     </div>
   )

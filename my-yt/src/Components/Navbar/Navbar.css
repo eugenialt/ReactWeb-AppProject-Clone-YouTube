@@ -60,3 +60,23 @@ nav {
     width: 25px;
     height: 25px;
 }
+
+@media (max-width: 900px) {
+    .menu-icon{
+        display:none;
+
+    }
+    .nav-right img {
+        display: none;
+    }
+    .nav-right .user-icon {
+        display: none;
+        width: 30px;
+    }
+    .logo {
+        width: 30px;
+    }
+    .nav-middle input {
+        width: 100%;
+    }
+}

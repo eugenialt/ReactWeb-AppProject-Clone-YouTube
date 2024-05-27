@@ -10,7 +10,9 @@ import jack from '../../assets/jack.png'
 import user_profile from '../../assets/user_profile.jpg'
 import { useState } from 'react'
 import { API_KEY } from '../../../../data'
-import { useParams } from 'react-router'
+import { Navigate, useParams } from 'react-router'
+import { useNavigate } from 'react-router-dom';
+
 
 
 interface Video{
@@ -39,6 +41,8 @@ interface Video{
 const PlayVideo = ({videoId}: {videoId: string | undefined }) => {
 
 const [apiData, setData] = useState<Video[]>([]);
+const [isSaved, setIsSaved] = useState<boolean>(false);
+
 const fetchData = async () => {
   const videoList_url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=US&videoCategoryId=${videoId}&key=${API_KEY}`;
   await fetch(videoList_url)
@@ -49,6 +53,32 @@ const fetchData = async () => {
 useEffect(() => {
   fetchData();
 }, []);
+
+const navigate = useNavigate();
+const handleSave = () => {
+  setIsSaved(!isSaved);
+
+  // Assuming you have an array of saved videos in state
+  const savedVideos = [...apiData]; // Copy the existing videos
+
+  // Check if the video is already saved
+  const isVideoSaved = savedVideos.some((video) => video.id === videoId);
+
+  if (isVideoSaved) {
+    // Remove the video from the saved list
+    const updatedSavedVideos = savedVideos.filter((video) => video.id !== videoId);
+    setData(updatedSavedVideos);
+  } else {
+    // Add the video to the saved list
+    const savedVideo = apiData.find((video) => video.id === videoId);
+    if (savedVideo) {
+      savedVideos.push(savedVideo);
+      setData(savedVideos);
+    }
+  }
+  navigate('/favorites');
+
+};
 
   return (
     <div className='play-video'>
@@ -61,7 +91,7 @@ useEffect(() => {
         <span><img src={like} alt=''/>125</span>
         <span><img src={dislike} alt=''/>2</span>
         <span><img src={share} alt=''/>Share</span>
-        <span><img src={save} alt=''/>Save</span>
+        <span onClick={handleSave}><img src={save} alt='' />{isSaved ? 'Saved' : 'Save'}</span>
         </div>
       </div>
     
