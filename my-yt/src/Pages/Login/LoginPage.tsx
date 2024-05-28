@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import Login from '../../Components/Authorization/Login/Login';
 
 const LoginPage = () => {
     const P = () => {
@@ -8,6 +9,7 @@ const LoginPage = () => {
   return (
     <div>
         <h1>Login</h1>
+        <Login/>
         <P />
     </div>
     
