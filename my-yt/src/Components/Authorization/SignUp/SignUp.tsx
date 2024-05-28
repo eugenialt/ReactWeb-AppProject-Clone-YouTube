@@ -1,15 +1,8 @@
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {getAuth, createUserWithEmailAndPassword} from "firebase/auth";
-
 import Form from '../Form/Form';
 import { setUser } from '../../../store/slices/userSlice';
-
-import { User } from 'firebase/auth';
-
-type CustomUser = User & {
-  accessToken: string;
-};
 
 const SignUp = () => {
     const dispatch = useDispatch();

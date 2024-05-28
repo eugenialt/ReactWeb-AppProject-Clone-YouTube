@@ -1,7 +1,6 @@
 "use client"
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import './PlayVideo.css'
-import video from '../../assets/video.mp4'
 import like from '../../assets/like.png'
 import dislike from '../../assets/dislike.png'
 import share from '../../assets/share.png'
@@ -10,10 +9,7 @@ import jack from '../../assets/jack.png'
 import user_profile from '../../assets/user_profile.jpg'
 import { useState } from 'react'
 import { API_KEY } from '../../../../data'
-import { Navigate, useParams } from 'react-router'
 import { useNavigate } from 'react-router-dom';
-
-
 
 interface Video{
   id: string;
@@ -36,8 +32,6 @@ interface Video{
     viewCount: string;
   };
 }
-
-// {videoId, categoryId }:{videoId: string | undefined; categoryId: string | undefined}
 const PlayVideo = ({videoId}: {videoId: string | undefined }) => {
 
 const [apiData, setData] = useState<Video[]>([]);
@@ -57,19 +51,12 @@ useEffect(() => {
 const navigate = useNavigate();
 const handleSave = () => {
   setIsSaved(!isSaved);
-
-  // Assuming you have an array of saved videos in state
-  const savedVideos = [...apiData]; // Copy the existing videos
-
-  // Check if the video is already saved
+  const savedVideos = [...apiData]; 
   const isVideoSaved = savedVideos.some((video) => video.id === videoId);
-
   if (isVideoSaved) {
-    // Remove the video from the saved list
     const updatedSavedVideos = savedVideos.filter((video) => video.id !== videoId);
     setData(updatedSavedVideos);
   } else {
-    // Add the video to the saved list
     const savedVideo = apiData.find((video) => video.id === videoId);
     if (savedVideo) {
       savedVideos.push(savedVideo);
@@ -82,7 +69,6 @@ const handleSave = () => {
 
   return (
     <div className='play-video'>
-      {/* <video src={video} controls autoPlay muted></video> */}
       <iframe src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}  frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
       <h3></h3>
       <div className="play-video-info">

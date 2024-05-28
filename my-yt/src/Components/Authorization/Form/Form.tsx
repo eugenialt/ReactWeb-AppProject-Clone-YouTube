@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-import React from 'react'
-
 const Form = ({title, handleClick}: {title:string, handleClick:any}) => {
     const [email, setEmail] = useState('')
     const [pass, setPass] = useState('')

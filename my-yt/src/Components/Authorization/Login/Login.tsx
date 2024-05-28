@@ -6,9 +6,6 @@ import Form from '../Form/Form';
 import { setUser } from '../../../store/slices/userSlice';
 
 
-import { User } from 'firebase/auth';
-
-
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
