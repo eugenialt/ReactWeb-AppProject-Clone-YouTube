@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { value_converter } from '../../../../data';
 import searchVideos from '../../hooks/searchVideo';
+import { Input } from '@mantine/core';
 interface Video {
   id: string;
   snippet: {
@@ -45,7 +46,7 @@ const Feed = ({ category }: { category: string }) => {
     <div className="feed">
        
       <form className="search-form">
-        <input 
+      <Input variant="unstyled" radius="md"
           type="text"
           placeholder="Search..."
           value={searchQuery}

@@ -1,4 +1,4 @@
-import { ActionIcon, useMantineColorScheme, useComputedColorScheme } from '@mantine/core';
+import { Button, useMantineColorScheme, useComputedColorScheme } from '@mantine/core';
 import '@mantine/core/styles.css';
 
 
@@ -7,14 +7,15 @@ const colorTheme= ()=> {
   const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
   const buttonTitle = colorScheme === 'light' ? 'light' : 'dark';
   return (
-    <ActionIcon
+    <Button
+    variant="subtle" 
+     color="gray"
       onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
-      variant="default"
-      size="xl"
+      size="md"
       aria-label="Toggle color scheme"
     >
       {buttonTitle}
-      </ActionIcon>
+      </Button>
   );
 }
 

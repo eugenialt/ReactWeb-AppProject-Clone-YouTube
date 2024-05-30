@@ -5,3 +5,23 @@
     justify-content: center;
     height: 50vh; 
   }
+
+.login-paper{
+  margin: 5px;
+}
+
+.login-paper:hover{
+  box-shadow: 5px 5px 10px 5px #c5c0c0;
+  cursor: pointer;
+  
+}
+
+.text-h1-l{
+  color: aliceblue;
+  padding: 15px;
+}
+
+.text-h1-r{
+  color: #9e1313;
+  padding: 15px;
+}
