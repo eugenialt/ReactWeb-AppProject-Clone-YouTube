@@ -10,28 +10,8 @@ import user_profile from '../../assets/user_profile.jpg'
 import { useState } from 'react'
 import { API_KEY } from '../../../../data'
 import { useNavigate } from 'react-router-dom';
+import { Video } from '../../interfaces/yt.interfaces';
 
-interface Video{
-  id: string;
-  snippet: {
-    title: string;
-    channelTitle: string;
-    publishedAt: string;
-    categoryId: string;
-    thumbnails: {
-      medium: {
-        url: string;
-      };
-    };
-    medium: {
-      url: string;
-    };
-    url: string;
-  };
-  statistics: {
-    viewCount: string;
-  };
-}
 const PlayVideo = ({videoId}: {videoId: string | undefined }) => {
 
 const [apiData, setData] = useState<Video[]>([]);

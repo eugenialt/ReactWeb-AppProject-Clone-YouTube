@@ -5,23 +5,7 @@ import moment from 'moment';
 import { value_converter } from '../../../../data';
 import searchVideos from '../../hooks/searchVideo';
 import { Input } from '@mantine/core';
-interface Video {
-  id: string;
-  snippet: {
-    title: string;
-    channelTitle: string;
-    publishedAt: string;
-    categoryId: string;
-    thumbnails: {
-      medium: {
-        url: string;
-      };
-    };
-  };
-  statistics: {
-    viewCount: string;
-  };
-}
+import { Video } from '../../interfaces/yt.interfaces';
 
 
 const Feed = ({ category }: { category: string }) => {

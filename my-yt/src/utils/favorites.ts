@@ -1,20 +1,4 @@
-export interface Video {
-    id: string;
-    snippet: {
-      title: string;
-      channelTitle: string;
-      publishedAt: string;
-      categoryId: string;
-      thumbnails: {
-        medium: {
-          url: string;
-        };
-      };
-    };
-    statistics: {
-      viewCount: string;
-    };
-  }
+import { Video } from "../interfaces/yt.interfaces";
   
   export const getFavorites = (): Video[] => {
     const savedFavorites = localStorage.getItem('favorites');

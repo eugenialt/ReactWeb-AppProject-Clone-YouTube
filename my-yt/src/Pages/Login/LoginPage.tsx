@@ -13,7 +13,6 @@ const LoginPage = () => {
       <div className='container-auth'>
         <h1 className='text-h1-l'>Login</h1>
         <Login />
-        {/* <p>Or <Link to="/register">Register here</Link></p>  */}
       </div>
       </Paper>
       </Grid.Col>
@@ -23,9 +22,6 @@ const LoginPage = () => {
       <div className='container-auth'>
         <h1 className='text-h1-r'>Register</h1>
         <SignUp />
-        {/* <p> 
-            Already have an account? <Link to="/login">Sign In</Link>
-        </p> */}
       </div>
       </Paper>
       </Grid.Col>

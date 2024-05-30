@@ -10,29 +10,8 @@ import thumbnail6 from '../../assets/thumbnail6.png'
 import thumbnail7 from '../../assets/thumbnail7.png'
 import thumbnail8 from '../../assets/thumbnail8.png'
 import { API_KEY } from '../../../../data'
+import { Video } from '../../interfaces/yt.interfaces';
 
-interface Video {
-    id: string;
-    snippet: {
-      title: string;
-      channelTitle: string;
-      publishedAt: string;
-      categoryId: string;
-      thumbnails: {
-        medium: {
-          url: string;
-        };
-      };
-      medium: {
-        url: string;
-      };
-      url: string;
-    };
-    statistics: {
-      viewCount: string;
-    };
-  }
-  
  const Recommended = ({categoryId} :{ categoryId: string | undefined; }) => {
   
     const [apiData, setApiData] = useState<Video[]>([]);
