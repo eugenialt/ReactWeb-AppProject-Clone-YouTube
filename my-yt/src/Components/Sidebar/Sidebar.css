@@ -20,7 +20,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-    width: fit-content;
+    /* width: fit-content; */
     flex-wrap: wrap;
     cursor: pointer;
 }

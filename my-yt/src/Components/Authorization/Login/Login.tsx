@@ -10,7 +10,7 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     
-    const handleLogin = ({email, password}: {email:string, password:string}) => {
+    const handleLogin = (email: string, password: string) => {
         const auth = getAuth();
         signInWithEmailAndPassword(auth, email, password)
             .then(({user}) => {
@@ -22,10 +22,7 @@ const Login = () => {
                 }));
                 navigate('/');
             })
-            .catch((error) => {
-                console.error('Error signing in:', error);
-                alert('Invalid user!');
-            });
+            .catch(() => alert('Invalid user!'))
     };
 
     return (
@@ -33,6 +30,7 @@ const Login = () => {
             title="sign in"
             handleClick={handleLogin}
         />
+        
     );
 };
 

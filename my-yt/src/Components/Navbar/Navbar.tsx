@@ -7,6 +7,12 @@ import more_icon from "../../assets/more.png"
 import notification_icon from "../../assets/notification.png"
 import profile_icon from "../../assets/jack.png"
 import { Link } from 'react-router-dom'
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/use-auth';
+import {removeUser} from '../../store/slices/userSlice';
+import { useAppDispatch } from '../../hooks/redux-hooks';
+
+
 type NavbarProps = {
   setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -15,6 +21,9 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebar }) => {
   const toggleSidebar = () => {
     setSidebar((prev) => !prev);
   }
+
+  const dispatch = useAppDispatch();
+  const {isAuth, email} = useAuth();
   
   return (
     <nav className='flex-div'>
@@ -35,7 +44,14 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebar }) => {
           <img src={more_icon} alt="Favorites" />
         </Link>
         <img src={notification_icon}  alt="" />
-        <img src={profile_icon} className='user-icon'  alt="" />
+        {isAuth ? (
+          <div>
+         <img src={profile_icon} className='user-icon'  alt="" onClick={()=> dispatch(removeUser())} />
+        {email}
+         </div>
+     ) : (
+       <Navigate to="/login" />
+     )}
       </div>
 
      </nav>

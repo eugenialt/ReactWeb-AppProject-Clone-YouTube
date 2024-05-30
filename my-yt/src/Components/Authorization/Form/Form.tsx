@@ -1,30 +1,35 @@
-import { useState } from "react";
+import {FC, useState} from 'react';
 
-const Form = ({title, handleClick}: {title:string, handleClick:any}) => {
-    const [email, setEmail] = useState('')
-    const [pass, setPass] = useState('')
+interface FormProps {
+    title: string;
+    handleClick: (email: string, pass: string) => void;
+}
 
-  return (
-    <div>
-        <input 
-        type="email"
-        value={email}
-        onChange={(event)=> setEmail(event.target.value)}
-        placeholder="email"
-        />
-        <input
-        type="password"
-        value={pass}
-        onChange={(event)=> setPass(event.target.value)}
-        placeholder="pass"
-       />
-       <button
-         onClick={() => handleClick(email, pass)}
-         >
-        {title}
-       </button>
-    </div>
-  )
+const Form: FC<FormProps> = ({title, handleClick}) => {
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+
+    return (
+        <div>
+            <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="email"
+            />
+            <input
+                type="password"
+                value={pass}
+                onChange={(e) => setPass(e.target.value)}
+                placeholder="password"
+            />
+            <button
+                onClick={() => handleClick(email, pass)}
+            >
+                {title}
+            </button>
+        </div>
+    )
 }
 
 export default Form

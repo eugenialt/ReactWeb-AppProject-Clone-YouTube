@@ -16,6 +16,7 @@ import megan from '../../assets/megan.png';
 import cameron from '../../assets/cameron.png';
 
 const Sidebar = ({ sidebar, category, setCategory }: { sidebar: boolean; category: string; setCategory: React.Dispatch<React.SetStateAction<string>>; }) => {
+
   return (
     <>
     <div className= {`sidebar ${sidebar ? "" : "small-sidebar"}`}>
