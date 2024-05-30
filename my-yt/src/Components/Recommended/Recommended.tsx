@@ -14,7 +14,7 @@ import { Video } from '../../interfaces/yt.interfaces';
 
  const Recommended = ({categoryId} :{ categoryId: string | undefined; }) => {
   
-    const [apiData, setApiData] = useState<Video[]>([]);
+    const [, setApiData] = useState<Video[]>([]);
   
     const fetchData = async () => {
         const relatedVideo_url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&regionCode=US&videoCategoryId=${categoryId}&key=${API_KEY}`;

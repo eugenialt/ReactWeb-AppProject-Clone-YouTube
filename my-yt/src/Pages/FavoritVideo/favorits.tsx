@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { Video, getFavorites, toggleFavorite, isFavorite } from '../../utils/favorites';
+import { getFavorites, toggleFavorite, isFavorite } from '../../utils/favorites';
 import more_icon from '../../assets/more.png';
 import { value_converter } from '../../../../data';
+import { Video } from '../../interfaces/yt.interfaces';
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState<Video[]>([]);
